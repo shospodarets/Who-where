@@ -1,7 +1,7 @@
 /**
  * Who-where - JavaScipt- application
  * Copyright (c) 2011-2012 Sergey Gospodarets ( http://gospodarets.com/ | sgospodarets@gmail.com )
- * 
+ *
  * Dual licensed under the MIT and GPL licenses:
  *   http://www.opensource.org/licenses/mit-license.php
  *   http://www.gnu.org/licenses/gpl.html
@@ -182,7 +182,8 @@ whoWhere.JSONToUsers.locationParse = function(obj){
 					$switcher.addClass(activeClass);
 				}
 				$locationList.append($switcher);
-			}(ii));		}
+			}(ii));
+		}
 	}else{
 		alert('Загруженный файл не содержит локаций');
 	}
@@ -207,16 +208,19 @@ whoWhere.JSONToUsers.parse = function(obj){
 	/* start columns */
 	if(obj && obj.columns && obj.columns.length){
 		var $columns = $('.people .column');
-		for (var columnsI = 0; columnsI < obj.columns.length; columnsI++){			var currentColumn = obj.columns[columnsI];
+		for (var columnsI = 0; columnsI < obj.columns.length; columnsI++){
+			var currentColumn = obj.columns[columnsI];
 			var $currentColumn = $columns.eq(columnsI);
 			/* start teams */
 			if( currentColumn.teamsArray && currentColumn.teamsArray.length){
-				for (var teamsArrayI = 0; teamsArrayI < currentColumn.teamsArray.length; teamsArrayI++){					var currentTeam = currentColumn.teamsArray[teamsArrayI];
+				for (var teamsArrayI = 0; teamsArrayI < currentColumn.teamsArray.length; teamsArrayI++){
+					var currentTeam = currentColumn.teamsArray[teamsArrayI];
 					var $currentTeam = whoWhere.JSONToUsers.appendEl($('.examples-wrapper .team'),$currentColumn)
 					whoWhere.JSONToUsers.setTextFromProp($currentTeam.find('.team-name'), currentTeam, 'name');// set team name
 					/* start subteams */
 					if( currentTeam.subteams && currentTeam.subteams.length){
-						for (var subteamsI = 0; subteamsI < currentTeam.subteams.length; subteamsI++){							var currentSubTeam = currentTeam.subteams[subteamsI];
+						for (var subteamsI = 0; subteamsI < currentTeam.subteams.length; subteamsI++){
+							var currentSubTeam = currentTeam.subteams[subteamsI];
 							/* start people */
 							if( currentSubTeam.people && currentSubTeam.people.length){
 								for (var peopleI = 0; peopleI < currentSubTeam.people.length; peopleI++){
@@ -267,7 +271,6 @@ whoWhere.JSONToUsers.parse = function(obj){
 									// set user login
 									var $centerLogin = $centerRow.find('.user-login');
 									whoWhere.JSONToUsers.setTextFromProp($centerLogin, currentPeople, 'login');
-									$centerLogin.closest('.hidden').removeClass('hidden');
 									// set user phones
 									whoWhere.JSONToUsers.setElsFromArray(currentPeople,'phones',$centerRow.find('.phones'));
 									// set user mails
@@ -291,7 +294,8 @@ whoWhere.JSONToUsers.parse = function(obj){
 								whoWhere.utils.log('subteam',currentSubTeam,'has not people');
 								continue;
 							}
-							/* end people */						};
+							/* end people */
+						};
 					}else{
 						whoWhere.utils.log('team',currentTeam,'has not subteams');
 						continue;
@@ -346,7 +350,6 @@ whoWhere.JSONToUsers.parseComplete = function(){
 /* BEGIN UTILS */
 whoWhere.JSONToUsers.setElsFromObjArray = function(obj,prop,$objsWrapper,logFlag){
 	if(obj && obj[prop] && obj[prop].length){
-		$objsWrapper.closest('.hidden').removeClass('hidden');
 		var _i = 0;
 		var _length = obj[prop].length;
 		var appendObj = $objsWrapper.children();
@@ -354,8 +357,12 @@ whoWhere.JSONToUsers.setElsFromObjArray = function(obj,prop,$objsWrapper,logFlag
 			var _currentProp = obj[prop][_i];
 			var appendObjClone = appendObj.clone();
 			var name = _currentProp['name'];
-			appendObjClone.find('.name').html(whoWhere.utils.decode(_currentProp['name']));
-			appendObjClone.find('.value').html(whoWhere.utils.decode(_currentProp['value']));
+			var value = _currentProp['value'];
+			if(name && value){
+				$objsWrapper.closest('.hidden').removeClass('hidden');
+			}
+			appendObjClone.find('.name').html(whoWhere.utils.decode(name));
+			appendObjClone.find('.value').html(whoWhere.utils.decode(value));
 			$objsWrapper.append(appendObjClone);
 		};
 		appendObj.remove();
@@ -365,12 +372,14 @@ whoWhere.JSONToUsers.setElsFromObjArray = function(obj,prop,$objsWrapper,logFlag
 }
 whoWhere.JSONToUsers.setElsFromArray = function(obj,prop,$objsWrapper,logFlag){
 	if(obj && obj[prop] && obj[prop].length){
-		$objsWrapper.closest('.hidden').removeClass('hidden');
 		var _i = 0;
 		var _length = obj[prop].length;
 		var appendObj = $objsWrapper.children();
 		for (var _i = 0; _i < _length; _i++){
 			var _currentProp = obj[prop][_i];
+			if(_currentProp){
+				$objsWrapper.closest('.hidden').removeClass('hidden');
+			}
 			var appendObjClone = appendObj.clone();
 			$objsWrapper.append(appendObjClone.html(whoWhere.utils.decode(_currentProp)));
 		};
@@ -388,6 +397,7 @@ whoWhere.JSONToUsers.setAttrFromProp = function(el,elAttr,obj,prop,noLogFlag){
 }
 whoWhere.JSONToUsers.setTextFromProp = function(el,obj,prop,noLogFlag){
 	if(prop in obj){
+		el.closest('.hidden').removeClass('hidden');
 		el.html(whoWhere.utils.decode(obj[prop]));
 	}else if(!noLogFlag){
 		whoWhere.utils.log('Propertie with name:',prop,'in object', obj ,'is undefined');
