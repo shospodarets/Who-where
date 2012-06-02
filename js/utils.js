@@ -31,7 +31,7 @@ whoWhere.utils.decode = function(str){
 	return $.trim(str.toString()).replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
 whoWhere.utils.log = function(){
-	if(window.console && window.console.log){
+	if(window.console && window.console.log && whoWhere.needLog){
 		for (var i = 0; i < arguments.length; i++){
 			console.log(arguments[i]);
 		}
