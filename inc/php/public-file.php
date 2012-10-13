@@ -12,7 +12,7 @@
 	$Result = curl_exec($curl);
 	$Result = preg_replace("/[\n]/",'',$Result);//str_replace('\t','',$Result);
 	
-	$xml = '<script language="javascript" type="text/javascript">window.top.window.whoWhere.editItems.uploadCallback(\'' . $Result . '\');</script>';
+	$xml = '<script language="javascript" type="text/javascript">window.parent.window.whoWhere.editItems.uploadCallback(\'' . $Result . '\');</script>';
 	echo $xml;
 	
 	curl_close ($curl);
