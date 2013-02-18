@@ -10,7 +10,7 @@
 // OTHER: -
 // THIS:  whoWhere.JSONToUsers whoWhere.utils , whoWhere.usersToJSON.run
 (function($){// start jQuery closure
-$(document).bind('ready.whoWhere.editLocation').bind('ready.whoWhere.editLocation',function(){// document ready
+$(document).unbind('ready.whoWhere.editLocation').bind('ready.whoWhere.editLocation',function(){// document ready
 	whoWhere.editLocation.init();
 });
 if(!window.whoWhere){

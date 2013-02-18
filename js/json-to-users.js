@@ -10,7 +10,7 @@
 // OTHER: whoWhere.editLocation
 // THIS:  whoWhere.sortDrag , whoWhere.usersToJSON, whoWhere.utils
 (function($){// start jQuery closure
-$(document).bind('ready.whoWhere.JSONToUsers').bind('ready.whoWhere.JSONToUsers',function(){// document ready
+$(document).unbind('ready.whoWhere.JSONToUsers').bind('ready.whoWhere.JSONToUsers',function(){// document ready
 	whoWhere.JSONToUsers.init();
 });
 if(!window.whoWhere){
@@ -27,11 +27,14 @@ whoWhere.JSONToUsers.init = function(){// INIT
 }
 whoWhere.JSONToUsers.switchers = function(){
 	var $switchersWrapper = $('.locations-list');
+    var activeClass = 'active';
 	$switchersWrapper.undelegate("li","click.JSONToUsers").delegate("li", "click.JSONToUsers", function(e){
 		e.preventDefault();
 		var $this = $(this);
-		var activeClass = 'active';
 		if(!$this.hasClass(activeClass)){
+			whoWhere.utils.URIHash.remove('userInfoPopup');
+			whoWhere.utils.URIHash.remove('userInfoDialog');
+			whoWhere.utils.URIHash.set('location-postfix',$this.attr('data-location'));
 			$switchersWrapper.find('li').removeClass(activeClass);
 			$this.addClass(activeClass);
 			whoWhere.JSONToUsers.run();
@@ -110,7 +113,7 @@ whoWhere.JSONToUsers.getLocations = function(){
 			}
 			if(obj){
 				whoWhere.JSONToUsers.locationParse(obj);
-				whoWhere.JSONToUsers.getActiveLocationContent();
+				whoWhere.JSONToUsers.getActiveLocationContent(true);
 			}else{
 				alert('json-данные локаций, загруженные по адресу: "'+url+'"'+' имеют неверный формат');
 				whoWhere.JSONToUsers.setFirstLocations();// set first location on error
@@ -124,7 +127,8 @@ whoWhere.JSONToUsers.getLocations = function(){
 		}
 	});
 }
-whoWhere.JSONToUsers.getActiveLocationContent = function(){
+whoWhere.JSONToUsers.getActiveLocationContent = function(afterGetLocations){
+	afterGetLocations = afterGetLocations || false;
 	var url = 'inc/locations/who-where-location-'+$('.locations-list .active').eq(0).attr('data-location')+'.json';
 	var request = $.ajax({
 		url:url,
@@ -138,6 +142,10 @@ whoWhere.JSONToUsers.getActiveLocationContent = function(){
 			if(obj){
 				whoWhere.JSONToUsers.cleanContent();
 				whoWhere.JSONToUsers.parse(obj);
+				if(afterGetLocations){
+					whoWhere.init.userInfoDialog.showFromHash();
+					whoWhere.init.initHover.showFromHash();
+				}
 				whoWhere.utils.loader.hide();// hide loader
 			}else{
 				alert('json-данные, загруженные по адресу: "'+url+'"'+' имеют неверный формат');
@@ -184,10 +192,30 @@ whoWhere.JSONToUsers.locationParse = function(obj){
 				$locationList.append($switcher);
 			}(ii));
 		}
+		whoWhere.JSONToUsers.setLocationAndHash();
 	}else{
 		alert('Загруженный файл не содержит локаций');
 	}
 }
+whoWhere.JSONToUsers.setLocationAndHash = function () {
+	var activeClass = 'active';
+	var locationPostfix = whoWhere.utils.URIHash.get('location-postfix');
+	var $locations = $('.locations-list li');
+	var $activeLocation = $locations.filter('.active');
+	if(!locationPostfix){
+		whoWhere.utils.URIHash.set('location-postfix',  $activeLocation.attr('data-location'));
+		return;
+	}
+	$locations.each(function(){
+		var $this = $(this);
+		if($this.attr('data-location')==locationPostfix){
+			isLocationFromHash = true;
+			$activeLocation.removeClass(activeClass);
+			$this.addClass(activeClass);
+			return false;
+		}
+	});
+};
 whoWhere.JSONToUsers.parse = function(obj){
 	/* start location */
 	if(obj && obj.location){

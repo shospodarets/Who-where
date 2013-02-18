@@ -10,7 +10,7 @@
 // OTHER: -
 // THIS:  -
 (function($){// start jQuery closure
-$(document).bind('ready.whoWhere.deleteItems').bind('ready.whoWhere.deleteItems',function(){// document ready
+$(document).unbind('ready.whoWhere.deleteItems').bind('ready.whoWhere.deleteItems',function(){// document ready
 	whoWhere.deleteItems.init();
 });
 if(!window.whoWhere){

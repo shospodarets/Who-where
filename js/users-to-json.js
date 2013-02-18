@@ -10,7 +10,7 @@
 // OTHER: whoWhere.JSONToUsers
 // THIS:  -
 (function($){// start jQuery closure
-$(document).bind('ready.whoWhere.usersToJSON').bind('ready.whoWhere.usersToJSON',function(){// document ready
+$(document).unbind('ready.whoWhere.usersToJSON').bind('ready.whoWhere.usersToJSON',function(){// document ready
 	$('body').eq(0).removeClass('view-mode');// TURN OFF EDIT_MODE (REMOVE VIEW MODE CLASS FROM BODY)
 	whoWhere.usersToJSON.init();
 });
@@ -245,7 +245,7 @@ whoWhere.usersToJSON.setPropFromEl = function(obj,prop,$el,attrName){
 	}
 }
 whoWhere.usersToJSON.setProp = function(obj,prop,value,noLogFlag){
-	if(value){
+	if(value || value===0){
 		obj[prop] = whoWhere.utils.encode( value );
 	}else if(!noLogFlag){
 		whoWhere.utils.log('Value length is 0, false or undefined for property', prop, 'in', obj );

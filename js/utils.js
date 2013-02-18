@@ -10,7 +10,7 @@
 // OTHER: whoWhere.addItems , whoWhere.deleteItems , whoWhere.editItems , whoWhere.init , whoWhere.JSONToUsers , whoWhere.usersToJSON, whoWhere.editLocation, whoWhere.editLocation
 // THIS:  whoWhere.editItems
 (function($){// start jQuery closure
-$(document).bind('ready.whoWhere.utils').bind('ready.whoWhere.utils',function(){// document ready
+$(document).unbind('ready.whoWhere.utils').bind('ready.whoWhere.utils',function(){// document ready
 	whoWhere.utils.init();
 });
 if(!window.whoWhere){
@@ -401,4 +401,65 @@ whoWhere.utils.setDialogPosition = function(box,boxWidth,boxHeight,boxTop,boxLef
 	drop.hide();
 }
 /* END FOR DIALOG */
+whoWhere.utils.URIHash = {
+	dump : function(string)
+	{
+		var hash = string || window.location.hash;
+		var dump = [];
+
+		if(hash.length == 0) return dump;
+
+		hash = hash.substring(string ? 0 : 1).split('&');
+
+		for(var key in hash)
+		{
+			var pair = hash[key].split('=');
+
+			if(pair.length != 2 || pair[0] in dump)
+				return [];
+
+			// escape for storage
+			dump[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1]);
+		}
+		return dump;
+	},
+
+	get : function(key, string)
+	{
+		return this.dump(string)[key];
+	},
+
+	set : function(key,value, string)
+	{
+		var dump = this.dump(string);
+		dump[key] = value;
+
+		return this.setLocation(dump, string);
+	},
+
+	setLocationToString: function(key, value){
+		return decodeURIComponent( this.set(key,  value, window.location.href) );
+	},
+
+	remove : function(key){
+		var dump = this.dump();
+		delete dump[key];
+
+		this.setLocation(dump);
+	},
+
+	setLocation : function(dump, string){
+		var hash = [];
+
+		for(var key in dump)
+			hash.push(encodeURIComponent(key) + '=' + encodeURIComponent(dump[key]));
+
+		var result = hash.join('&');
+		if(!string){
+			window.location.hash = result;
+		}
+		return result;
+	}
+}
+
 })(jQuery);// end jQuery closure

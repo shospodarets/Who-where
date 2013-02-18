@@ -75,13 +75,6 @@ p,h1,h2,h3,h4,h5,h6{
 	margin:0 1px 0 -1px;
 	border-left:1px solid #000;
 }
-.user-info{
-	padding-left:20px;
-	display:inline;
-	background:url(../images/user-ico.gif) no-repeat 0 50%;
-	font-weight:bold;
-	margin:0 0 5px;
-}
 .info-box{
 	position:absolute;
 	top:0;
@@ -105,7 +98,9 @@ p,h1,h2,h3,h4,h5,h6{
 	z-index:200;
 }
 .donwload-upload-btns:after{
-	content:'';	display:block;	clear:both;
+	content:'';
+	display:block;
+	clear:both;
 }
 .donwload-upload-btns div{
 	padding-right:50px;
@@ -127,7 +122,9 @@ p,h1,h2,h3,h4,h5,h6{
 	padding-left:12px;
 }
 .change-location-photo-wrapper:after{
-	content:'';	display:block;	clear:both;
+	content:'';
+	display:block;
+	clear:both;
 }
 .change-location-photo-wrapper .change-location-photo{
 	float:left;
@@ -395,6 +392,21 @@ p,h1,h2,h3,h4,h5,h6{
 	font-size:11px;
 }
 .user-popup em{font-style:normal;}
+.user-popup .copy-link{
+	display: none;
+	width: 19px;
+	height: 19px;
+	position: absolute;
+	top: 0;
+	left: 0;
+	background:url(../images/ico/link-popup.png) no-repeat -3px -3px;
+	cursor: pointer;
+}
+.user-popup .copy-link .zclip{
+	display: block;
+	width: 19px;
+	height: 19px;
+}
 .user-lightbox{
 	display:none;
 	-moz-word-wrap:break-word;
@@ -402,7 +414,9 @@ p,h1,h2,h3,h4,h5,h6{
 	word-wrap:break-word;
 }
 .after:after{
-	content:'';	display:block;	clear:both;
+	content:'';
+	display:block;
+	clear:both;
 }
 .user-lightbox .image-wrapper{
 	width:100%;
@@ -477,7 +491,9 @@ p,h1,h2,h3,h4,h5,h6{
 	display:block;
 }
 .user-lightbox .add-info:after{
-	content:'';	display:block;	clear:both;
+	content:'';
+	display:block;
+	clear:both;
 }
 .user-lightbox .add-info a{
 	float:left;
@@ -489,7 +505,9 @@ p,h1,h2,h3,h4,h5,h6{
 	outline:none;
 }
 .user-lightbox .add-info-wrapper:after{
-	content:'';	display:block;	clear:both;
+	content:'';
+	display:block;
+	clear:both;
 }
 .user-lightbox .remove-info-btn{
 	float:right;
@@ -544,7 +562,9 @@ p,h1,h2,h3,h4,h5,h6{
 	width:100%;
 }
 .column .add-new-team:after{
-	content:'';	display:block;	clear:both;
+	content:'';
+	display:block;
+	clear:both;
 }
 .column .add-new-team img{
 	float:left;
@@ -611,6 +631,7 @@ p,h1,h2,h3,h4,h5,h6{
 }
 .people .worker .title{font-size:10px;}
 .worker.hover .title,
+.worker.active .title,
 .worker .title-wrapper.highlight,
 .worker .title-wrapper:hover{
 	color:#fff;
@@ -876,3 +897,4 @@ p,h1,h2,h3,h4,h5,h6{
 .view-mode .swich-to-wrapper{display:none;}
 .view-mode .add-location{display:none;}
 .view-mode .locations-list .options-box{display:none;}
+.view-mode .user-popup .copy-link{display:block;}

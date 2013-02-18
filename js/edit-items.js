@@ -10,7 +10,7 @@
 // OTHER: whoWhere.utils require in this (if user is editor)
 // THIS:  whoWhere.sortDrag
 (function($){// start jQuery closure
-$(document).bind('ready.whoWhere.editItems').bind('ready.whoWhere.editItems',function(){// document ready
+$(document).unbind('ready.whoWhere.editItems').bind('ready.whoWhere.editItems',function(){// document ready
 	whoWhere.editItems.init();
 });
 if(!window.whoWhere){

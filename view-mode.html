@@ -10,6 +10,8 @@
 	<script type="text/javascript" src="js/libs/jquery-1.7.1.min.js"></script>
 	<script type="text/javascript" src="js/libs/jquery-ui-1.8.16.custom.min.js"></script>
 	<script type="text/javascript" src="js/libs/json.js"></script>
+	<script type="text/javascript" src="js/libs/jquery.zclip.min.js"></script>
+
 	<script type="text/javascript" src="js/utils.js"></script>
 	<script type="text/javascript" src="js/initialization.js"></script>
 	<script type="text/javascript" src="js/json-to-users.js"></script>
@@ -149,6 +151,9 @@
 							<a class="point user-name" data-mail="email" href="mailto:email"><!-- people name --></a>
 							<div class="user-popup">
 								<a href="#link-to-profile">
+									<span class="copy-link" title="Скопировать в буфер обмена ссылку на краткую информацию о сотруднике">
+										<span class="zclip"></span>
+									</span>
 									<img class="user-image" src="images/avatars/no-image-available.jpg" alt="user-image" width="100" />
 									<em class="user-name"><!-- people name --></em>
 									<span class="user-position-name"><!-- position name --></span>
@@ -423,7 +428,7 @@
 	</div>
 	<div id="footer">
 		<p>
-			&copy; 2011-2012 Сергей Господарец
+			&copy; Сергей Господарец
 		</p>
 		<p>
 			<a href="mailto:sgospodarets@gmail.com">sgospodarets@gmail.com</a>

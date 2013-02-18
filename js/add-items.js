@@ -10,7 +10,7 @@
 // OTHER: -
 // THIS:  whoWhere.sortDrag whoWhere.utils
 (function($){// start jQuery closure
-$(document).bind('ready.whoWhere.addItems').bind('ready.whoWhere.addItems',function(){// document ready
+$(document).unbind('ready.whoWhere.addItems').bind('ready.whoWhere.addItems',function(){// document ready
 	whoWhere.addItems.init();
 });
 if(!window.whoWhere){

@@ -1,1 +1,10 @@
 php_flag magic_quotes_gpc off
+
+<filesMatch ".(json)$">
+Header set Cache-Control "no-store, no-cache, must-revalidate"
+Header set Pragma "no-cache"
+Header set Expires "Mon, 26 Jul 1997 05:00:00 GMT"
+
+FileETag None
+Header unset ETag
+</filesMatch>

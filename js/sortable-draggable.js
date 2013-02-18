@@ -10,7 +10,7 @@
 // OTHER: whoWhere.addItems , whoWhere.editItems , whoWhere.JSONToUsers
 // THIS:  -
 (function($){// start jQuery closure
-$(document).bind('ready.whoWhere.sortDrag').bind('ready.whoWhere.sortDrag',function(){// document ready
+$(document).unbind('ready.whoWhere.sortDrag').bind('ready.whoWhere.sortDrag',function(){// document ready
 	whoWhere.sortDrag.init();
 });
 if(!window.whoWhere){

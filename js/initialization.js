@@ -10,7 +10,7 @@
 // OTHER: whoWhere.utils
 // THIS:  -
 (function($){// start jQuery closure
-$(document).bind('ready.whoWhere.init').bind('ready.whoWhere.init',function(){// document ready
+$(document).unbind('ready.whoWhere.init').bind('ready.whoWhere.init',function(){// document ready
 	$('body').eq(0).addClass('view-mode');// TURN ON EDIT_MODE (ADD VIEW MODE CLASS TO BODY)
 	whoWhere.init();
 });
@@ -124,6 +124,7 @@ whoWhere.init.userInfoDialog = function(){
 			resizable:false,
 			create: function(event, ui) {
 				var $dialog = $(this).closest('.ui-dialog');
+				whoWhere.utils.URIHash.set('userInfoDialog', $dialog.find('.user-basic-mail').html());
 				$(document).unbind("click.dialog").bind("click.dialog", function(e){
 					whoWhere.utils.faderClick(e,$dialogWrapper);
 				}); // bind hide dialog by fader click
@@ -139,6 +140,7 @@ whoWhere.init.userInfoDialog = function(){
 				$(document).unbind('keydown.dialog'); // unbind moving focus in dialog window
 				$(document).unbind("click.dialog"); // unbind hide dialog by fader click
 				$dialogClone.remove();
+				whoWhere.utils.URIHash.remove('userInfoDialog');
 			}
 		});
 	}).undelegate(".holder","click.userInfoDialog").delegate(".holder", "click.userInfoDialog", function(e){
@@ -152,6 +154,14 @@ whoWhere.init.userInfoDialog = function(){
 		var target = $('a.point[href="'+$this.attr('href')+'"]');
 		target.trigger('showDialog.userInfoDialog');// show user dialog
 	});
+}
+whoWhere.init.userInfoDialog.showFromHash = function(){
+	// check hash
+	var userDialogFromHash = whoWhere.utils.URIHash.get('userInfoDialog');
+	if(userDialogFromHash){
+		var target = $('a.point[href="mailto:'+userDialogFromHash+'"]');
+		target.trigger('showDialog.userInfoDialog');// show user dialog
+	}
 }
 whoWhere.init.initInputs = function() {// clear inputs onfocus
 	var _inputs = $('input:text, input:password, textarea');
@@ -189,7 +199,8 @@ whoWhere.init.initHover = function(){// show info on hover from list
 		holder.trigger('custom.hideDrop');
 	});
 	// center
-	peopleOnMapWrapper.undelegate(".employee .holder","mouseenter.initHover").delegate(".employee .holder", "mouseenter.initHover", function(e) {
+	peopleOnMapWrapper
+	.undelegate(".employee .holder","mouseenter.initHover").delegate(".employee .holder", "mouseenter.initHover", function(e) {
 		var box = $(this);
 		// highlight side link
 		var link = box.find('.point');
@@ -218,11 +229,48 @@ whoWhere.init.initHover = function(){// show info on hover from list
 		drop.show();
 	}).undelegate(".employee .holder","custom.hideDrop").delegate(".employee .holder", "custom.hideDrop", function(e){
 		var box = $(this);
+		if(box.data('copyLinkClicked')) return;
 		// hide drop
 		var drop = box.find('div.user-popup');
 		box.parent().parent().removeClass(activeClass);
 		drop.hide();
+
+		var link = box.find('.point');
+		var target = peopleSideWrapper.find('.title[href="'+link.attr('href')+'"]');
+		target.closest('.title-wrapper').removeClass(_hoverClass);
+	}).undelegate(".copy-link","mouseenter.userInfoPopup").delegate(".copy-link", "mouseenter.userInfoPopup", function(e){
+		var $this = $(this);
+		if(!$this.data('zclip')){
+			$this.data('zclip',true);
+			var $box = $this.closest('.holder');
+			$this.find('.zclip').zclip({
+				path:'../inc/swf/ZeroClipboard.swf',
+				copy: whoWhere.utils.URIHash.setLocationToString('userInfoPopup',  $box.find('.user-basic-mail').html())
+			}).on('mouseleave',function(e){
+				e.stopPropagation();
+			});
+		}
 	})
+	.undelegate(".copy-link","mousedown.userInfoPopup").delegate(".copy-link", "mousedown.userInfoPopup", function(e){
+		e.stopPropagation();
+
+		var $this = $(this);
+		var $box = $this.closest('.holder');
+		$box.data('copyLinkClicked', true);
+		setTimeout(function(){
+			$box.data('copyLinkClicked', false);
+		},0)
+	});
+}
+whoWhere.init.initHover.showFromHash = function(){
+	var userPopupFromHash = whoWhere.utils.URIHash.get('userInfoPopup');
+	if(userPopupFromHash){
+		var _hoverClass = 'highlight';
+		var $userOnMap = $('a.point[href="mailto:'+userPopupFromHash+'"]');
+		$userOnMap.trigger('custom.showDrop');
+		var $userOnSide = $('.title[href="mailto:'+userPopupFromHash+'"]');
+		$userOnSide.closest('.title-wrapper').addClass(_hoverClass);
+	}
 }
 whoWhere.init.initSearch = function(){// show popups when typing in field
 	var _input = $(".search-box .text");
