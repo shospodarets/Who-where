@@ -244,7 +244,7 @@ whoWhere.init.initHover = function(){// show info on hover from list
 			$this.data('zclip',true);
 			var $box = $this.closest('.holder');
 			$this.find('.zclip').zclip({
-				path:'../inc/swf/ZeroClipboard.swf',
+				path:'inc/swf/ZeroClipboard.swf',
 				copy: whoWhere.utils.URIHash.setLocationToString('userInfoPopup',  $box.find('.user-basic-mail').html())
 			}).on('mouseleave',function(e){
 				e.stopPropagation();

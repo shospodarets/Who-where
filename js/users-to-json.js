@@ -43,8 +43,8 @@ whoWhere.usersToJSON.run = function(){
 				'inc/php/save-to-file.php',
 				{
 					fileName:fileName,
-					json:jsonOuntput,
-					withBackupCopy:1
+					json:jsonOuntput
+//					withBackupCopy:1
 				},
 				function(R){// success
 					whoWhere.utils.log(R);
