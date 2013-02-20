@@ -53,7 +53,8 @@ whoWhere.JSONToUsers.uploadLastWorkedVersion = function(){
 	var lastWorkedUrl = 'inc/locations/last-worked-location-'+$('.locations-list .active').eq(0).attr('data-location')+'.json';
 	var request = $.ajax({
 		url:lastWorkedUrl,
-		type: "POST",
+		type: "GET",
+		cache: false,
 		success: function(data){
 			if(typeof(data)!='object'){// parse data if need
 				var obj = $.parseJSON(data);
@@ -104,7 +105,8 @@ whoWhere.JSONToUsers.getLocations = function(){
 	var url = 'inc/locations/locations-list.json';
 	var request = $.ajax({
 		url:url,
-		type: "POST",
+		type: "GET",
+		cache: false,
 		success: function(data){
 			if(typeof(data)!='object'){// parse data if need
 				var obj = $.parseJSON(data);
@@ -132,7 +134,8 @@ whoWhere.JSONToUsers.getActiveLocationContent = function(afterGetLocations){
 	var url = 'inc/locations/who-where-location-'+$('.locations-list .active').eq(0).attr('data-location')+'.json';
 	var request = $.ajax({
 		url:url,
-		type: "POST",
+		type: "GET",
+		cache: false,
 		success: function(data){
 			if(typeof(data)!='object'){// parse data if need
 				var obj = $.parseJSON(data);

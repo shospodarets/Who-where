@@ -75,7 +75,8 @@ whoWhere.init.infoLightBox = function(){
 			whoWhere.utils.loader.show();// show loader
 			var request = $.ajax({
 				url:url,
-				type: "POST",
+				type: "GET",
+				cache: false,
 				success: function(infoData){
 					var $infoData = $(infoData);
 					$inboBtn.data('infoData',$infoData);
