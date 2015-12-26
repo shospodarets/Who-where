@@ -3,7 +3,7 @@
 	$timeout = 30;
 	$curl    = curl_init();
 	
-	curl_setopt($curl, CURLOPT_URL, 'http://imgur.com/api/upload.xml');
+	curl_setopt($curl, CURLOPT_URL, 'https://imgur.com/api/upload.xml');
 	curl_setopt($curl, CURLOPT_TIMEOUT, $timeout);
 	curl_setopt($curl, CURLOPT_POST, 1);
 	curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);

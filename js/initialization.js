@@ -1,6 +1,6 @@
 /**
  * Who-where - JavaScipt- application
- * Copyright (c) 2011-2012 Sergey Gospodarets ( http://gospodarets.com/ | sgospodarets@gmail.com )
+ * Copyright (c) 2011-2015 Serg Gospodarets ( https://gospodarets.com/ | sgospodarets@gmail.com )
  * 
  * Dual licensed under the MIT and GPL licenses:
  *   http://www.opensource.org/licenses/mit-license.php
